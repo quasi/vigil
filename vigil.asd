@@ -33,3 +33,21 @@
                              (:file "integration-tests"))))
   :perform (test-op (o c)
              (symbol-call :fiveam :run! :vigil-tests)))
+
+(defsystem "vigil/archiver"
+  :description "SQLite archiver for vigil metrics"
+  :depends-on ("vigil" "trivial-rrd/sqlite")
+  :serial t
+  :components ((:module "src"
+                :components ((:file "archiver"))))
+  :in-order-to ((test-op (test-op "vigil/archiver-tests"))))
+
+(defsystem "vigil/archiver-tests"
+  :description "Tests for vigil archiver"
+  :depends-on ("vigil/archiver" "fiveam")
+  :serial t
+  :components ((:module "tests"
+                :components ((:file "archiver-tests"))))
+  :perform (test-op (o c)
+             (symbol-call :fiveam :run!
+                          (uiop:find-symbol* :archiver-tests :vigil-tests))))

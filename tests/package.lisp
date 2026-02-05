@@ -4,4 +4,5 @@
                     (#:bt #:bordeaux-threads)
                     (#:rrd #:trivial-rrd))
   (:export #:run-tests
-           #:vigil-tests))
+           #:vigil-tests
+           #:archiver-tests))

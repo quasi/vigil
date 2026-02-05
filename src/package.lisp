@@ -37,4 +37,11 @@
    ;; Conditions
    #:store-not-found
    #:no-active-store
-   #:condition-store-name))
+   #:condition-store-name
+
+   ;; Archiver (loaded via vigil/archiver)
+   #:start-archiver
+   #:stop-archiver
+   #:archive-store
+   #:archive-all-stores
+   #:archiver-running-p))
