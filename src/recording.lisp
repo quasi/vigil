@@ -45,7 +45,8 @@
                                          (step *default-step*)
                                          (retention *default-retention*)
                                          (cf :average))
-  "Record to current *metrics*. Signals no-active-store if unbound."
+  "Record to current *metrics*.
+   Signals: no-active-store if *metrics* is nil (outside a with-store scope)."
   (:feature vigil-scoping)
   (:role "Implicit-scope recording")
   (:purpose "Convenient recording using dynamic binding")
@@ -58,11 +59,12 @@
                                                 (step *default-step*)
                                                 (retention *default-retention*)
                                                 (cf :average))
-  "Record to *global-metrics*."
+  "Record to *global-metrics*.
+   Signals: global-metrics-not-initialized if initialize-global-metrics has not been called."
   (:feature vigil-scoping)
   (:role "Global-scope recording")
   (:purpose "Record image-wide metrics")
   (unless *global-metrics*
-    (error 'no-active-store))
+    (error 'global-metrics-not-initialized))
   (record *global-metrics* metric-name value
           :timestamp timestamp :step step :retention retention :cf cf))

@@ -1,5 +1,10 @@
 (defpackage #:vigil
-  (:use #:cl #:telos)
+  (:use #:cl)
+  (:import-from #:telos
+    #:deffeature
+    #:defun/i
+    #:defclass/i
+    #:defintent)
   (:local-nicknames (#:rrd #:trivial-rrd)
                     (#:bt #:bordeaux-threads))
   (:export
@@ -34,10 +39,20 @@
    #:aggregate
    #:exceeds?
 
-   ;; Conditions
+   ;; Conditions — errors
+   #:vigil-error
    #:store-not-found
    #:no-active-store
+   #:global-metrics-not-initialized
    #:condition-store-name
+   #:archiver-already-running
+   #:no-archiver-backend
+
+   ;; Conditions — warnings
+   #:vigil-warning
+   #:archiver-metric-copy-failed
+   #:archiver-store-failed
+   #:archiver-loop-error
 
    ;; Archiver (loaded via vigil/archiver)
    #:start-archiver

@@ -4,6 +4,9 @@
   :license "MIT"
   :version "0.1.0"
   :depends-on ("trivial-rrd" "bordeaux-threads" "telos")
+  ;; :serial t — load order is significant: package → features → conditions → store
+  ;;             → registry → scoping → recording → queries.  Explicit depends-on
+  ;;             would be equivalent but :serial t is clearer for this linear chain.
   :serial t
   :components ((:module "src"
                 :components ((:file "package")

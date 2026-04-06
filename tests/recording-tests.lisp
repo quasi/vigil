@@ -10,7 +10,10 @@
       (&body)
     (vigil::clear-registry)
     (setf vigil:*metrics* nil)
-    (setf vigil:*global-metrics* nil)))
+    (setf vigil:*global-metrics* nil)
+    ;; Reset defaults that initialize-global-metrics may have changed
+    (setf vigil::*default-step* 10)
+    (setf vigil::*default-retention* 3600)))
 
 (test record-explicit-store
   "record writes to explicit store"
@@ -59,3 +62,16 @@
       (record store "auto-created" 1.0)
       (let ((info (rrd:rrd-info (vigil::store-backend store) "auto-created")))
         (is (not (null info)))))))
+
+(test record-global!-signals-without-global
+  "record-global! signals global-metrics-not-initialized when *global-metrics* is nil"
+  (with-fixture clean-registry ()
+    (signals global-metrics-not-initialized
+      (record-global! "x" 1))))
+
+(test initialize-global-metrics-applies-step-retention
+  "initialize-global-metrics sets *default-step* and *default-retention*"
+  (with-fixture clean-registry ()
+    (initialize-global-metrics :step 1 :retention 60)
+    (is (= 1 vigil::*default-step*))
+    (is (= 60 vigil::*default-retention*))))

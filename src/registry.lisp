@@ -48,7 +48,7 @@
           collect name)))
 
 (defun/i get-store (name)
-  "Get store by name, or NIL if not found."
+  "Return the store registered under NAME, or NIL if not found."
   (:feature vigil-registry)
   (:role "Store lookup")
   (:purpose "Retrieve specific store for querying")

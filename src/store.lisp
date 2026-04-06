@@ -25,7 +25,9 @@
   (:purpose "Wrap memory-backend with locking and identity"))
 
 (defun/i make-store (name &key parent)
-  "Create a new store with the given name."
+  "Create a new store named NAME. NAME must be a non-empty string; it is used as the registry key.
+   PARENT, if supplied, must be a store instance; used for hierarchy tracking only.
+   Does not register the store — call register-store explicitly, or use with-store."
   (:feature vigil-store)
   (:role "Store constructor")
   (:purpose "Create store instance without registration")

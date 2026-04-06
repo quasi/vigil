@@ -11,11 +11,15 @@
 ;;; Initialization
 
 (defun/i initialize-global-metrics (&key (step 10) (retention 3600))
-  "Initialize the global metrics store. Call once at startup."
+  "Initialize the global metrics store. Call once at startup.
+   STEP and RETENTION become the image-wide defaults for auto-created metrics
+   (sets *default-step* and *default-retention*)."
   (:feature vigil-scoping)
   (:role "Global store initialization")
   (:purpose "Set up image-wide metrics before any recording")
-  (setf *global-metrics* (make-store "global"))
+  (setf *default-step* step
+        *default-retention* retention
+        *global-metrics* (make-store "global"))
   (register-store *global-metrics*)
   *global-metrics*)
 
